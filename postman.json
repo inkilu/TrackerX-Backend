@@ -1,0 +1,123 @@
+{
+  "info": {
+    "name": "Subscriptions API",
+    "_postman_id": "4a2d829f-d933-4d32-9e7b-788b78813912",
+    "description": "Postman Collection for Express + Firebase Auth + MongoDB Subscription Service",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Subscription",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{idToken}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Netflix\",\n  \"description\": \"Streaming subscription\",\n  \"firstDate\": \"2025-11-25\",\n  \"repeatsEvery\": 1,\n  \"repeatsUnit\": \"month\",\n  \"amount\": 499,\n  \"currency\": \"INR\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/subscriptions",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "subscriptions"]
+        }
+      }
+    },
+    {
+      "name": "List Subscriptions",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{idToken}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/subscriptions?page=1&limit=20",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "subscriptions"],
+          "query": [
+            { "key": "page", "value": "1" },
+            { "key": "limit", "value": "20" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Subscription",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{idToken}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/subscriptions/{{subscriptionId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "subscriptions", "{{subscriptionId}}"]
+        }
+      }
+    },
+    {
+      "name": "Update Subscription",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{idToken}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Netflix Premium\",\n  \"amount\": 799\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/subscriptions/{{subscriptionId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "subscriptions", "{{subscriptionId}}"]
+        }
+      }
+    },
+    {
+      "name": "Delete Subscription",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{idToken}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/subscriptions/{{subscriptionId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "subscriptions", "{{subscriptionId}}"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:4000" },
+    { "key": "idToken", "value": "" },
+    { "key": "subscriptionId", "value": "" }
+  ]
+}
