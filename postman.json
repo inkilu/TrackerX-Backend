@@ -1,8 +1,8 @@
 {
   "info": {
-    "name": "Subscriptions API",
-    "_postman_id": "4a2d829f-d933-4d32-9e7b-788b78813912",
-    "description": "Postman Collection for Express + Firebase Auth + MongoDB Subscription Service",
+    "name": "Subscriptions API (extended)",
+    "_postman_id": "8f3b6c2a-9f7d-4e4b-9d2a-123456789abc",
+    "description": "Extended collection: CRUD + Summary (detailed) which returns totals, averages and nextDueDate per item.\nScreenshot file included as local file URL: file:///mnt/data/970bb24d-44be-4be4-9681-74b54a63bd6a.png",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -11,47 +11,26 @@
       "request": {
         "method": "POST",
         "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{idToken}}",
-            "type": "text"
-          },
-          {
-            "key": "Content-Type",
-            "value": "application/json",
-            "type": "text"
-          }
+          { "key": "Authorization", "value": "Bearer {{idToken}}", "type": "text" },
+          { "key": "Content-Type", "value": "application/json", "type": "text" }
         ],
         "body": {
           "mode": "raw",
           "raw": "{\n  \"name\": \"Netflix\",\n  \"description\": \"Streaming subscription\",\n  \"firstDate\": \"2025-11-25\",\n  \"repeatsEvery\": 1,\n  \"repeatsUnit\": \"month\",\n  \"amount\": 499,\n  \"currency\": \"INR\"\n}"
         },
-        "url": {
-          "raw": "{{baseUrl}}/api/subscriptions",
-          "host": ["{{baseUrl}}"],
-          "path": ["api", "subscriptions"]
-        }
+        "url": { "raw": "{{baseUrl}}/api/subscriptions", "host": ["{{baseUrl}}"], "path": ["api", "subscriptions"] }
       }
     },
     {
       "name": "List Subscriptions",
       "request": {
         "method": "GET",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{idToken}}",
-            "type": "text"
-          }
-        ],
+        "header": [{ "key": "Authorization", "value": "Bearer {{idToken}}", "type": "text" }],
         "url": {
           "raw": "{{baseUrl}}/api/subscriptions?page=1&limit=20",
           "host": ["{{baseUrl}}"],
           "path": ["api", "subscriptions"],
-          "query": [
-            { "key": "page", "value": "1" },
-            { "key": "limit", "value": "20" }
-          ]
+          "query": [{ "key": "page", "value": "1" }, { "key": "limit", "value": "20" }]
         }
       }
     },
@@ -59,17 +38,8 @@
       "name": "Get Subscription",
       "request": {
         "method": "GET",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{idToken}}"
-          }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}/api/subscriptions/{{subscriptionId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["api", "subscriptions", "{{subscriptionId}}"]
-        }
+        "header": [{ "key": "Authorization", "value": "Bearer {{idToken}}", "type": "text" }],
+        "url": { "raw": "{{baseUrl}}/api/subscriptions/{{subscriptionId}}", "host": ["{{baseUrl}}"], "path": ["api", "subscriptions", "{{subscriptionId}}"] }
       }
     },
     {
@@ -77,40 +47,71 @@
       "request": {
         "method": "PUT",
         "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{idToken}}"
-          },
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
+          { "key": "Authorization", "value": "Bearer {{idToken}}", "type": "text" },
+          { "key": "Content-Type", "value": "application/json", "type": "text" }
         ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"name\": \"Netflix Premium\",\n  \"amount\": 799\n}"
-        },
-        "url": {
-          "raw": "{{baseUrl}}/api/subscriptions/{{subscriptionId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["api", "subscriptions", "{{subscriptionId}}"]
-        }
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"Netflix Premium\",\n  \"amount\": 799\n}" },
+        "url": { "raw": "{{baseUrl}}/api/subscriptions/{{subscriptionId}}", "host": ["{{baseUrl}}"], "path": ["api", "subscriptions", "{{subscriptionId}}"] }
       }
     },
     {
       "name": "Delete Subscription",
       "request": {
         "method": "DELETE",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{idToken}}"
-          }
-        ],
+        "header": [{ "key": "Authorization", "value": "Bearer {{idToken}}", "type": "text" }],
+        "url": { "raw": "{{baseUrl}}/api/subscriptions/{{subscriptionId}}", "host": ["{{baseUrl}}"], "path": ["api", "subscriptions", "{{subscriptionId}}"] }
+      }
+    },
+    {
+      "name": "Spending Summary (detailed)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{idToken}}", "type": "text" }],
         "url": {
-          "raw": "{{baseUrl}}/api/subscriptions/{{subscriptionId}}",
+          "raw": "{{baseUrl}}/api/subscriptions/summary?period=month&date=2025-11-01",
           "host": ["{{baseUrl}}"],
-          "path": ["api", "subscriptions", "{{subscriptionId}}"]
+          "path": ["api", "subscriptions", "summary"],
+          "query": [{ "key": "period", "value": "month" }, { "key": "date", "value": "2025-11-01" }]
+        }
+      },
+      "response": [
+        {
+          "name": "Example - Monthly summary (extended)",
+          "originalRequest": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{idToken}}", "type": "text" }],
+            "url": { "raw": "{{baseUrl}}/api/subscriptions/summary?period=month&date=2025-11-01" }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "body": "{\n  \"total\": 1497,\n  \"periodStart\": \"2025-11-01T00:00:00.000Z\",\n  \"periodEnd\": \"2025-11-30T23:59:59.999Z\",\n  \"breakdown\": [\n    {\n      \"subscriptionId\": \"656a782e9b1c2f0012abc123\",\n      \"itemName\": \"Netflix\",\n      \"occurrences\": 1,\n      \"amountPerOccurrence\": 499,\n      \"subtotal\": 499,\n      \"averagePerOccurrence\": 499,\n      \"nextDueDate\": \"2025-12-25T00:00:00.000Z\"\n    },\n    {\n      \"subscriptionId\": \"656a78309b1c2f0012abc456\",\n      \"itemName\": \"Spotify\",\n      \"occurrences\": 1,\n      \"amountPerOccurrence\": 199,\n      \"subtotal\": 199,\n      \"averagePerOccurrence\": 199,\n      \"nextDueDate\": \"2025-12-10T00:00:00.000Z\"\n    },\n    {\n      \"subscriptionId\": \"656a78409b1c2f0012abc789\",\n      \"itemName\": \"Quarterly Service\",\n      \"occurrences\": 1,\n      \"amountPerOccurrence\": 799,\n      \"subtotal\": 799,\n      \"averagePerOccurrence\": 799,\n      \"nextDueDate\": \"2026-02-01T00:00:00.000Z\"\n    }\n  ]\n}"
+        }
+      ]
+    },
+    {
+      "name": "Spending Summary (by range)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{idToken}}", "type": "text" }],
+        "url": {
+          "raw": "{{baseUrl}}/api/subscriptions/summary?start=2025-01-01&end=2025-03-31",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "subscriptions", "summary"],
+          "query": [{ "key": "start", "value": "2025-01-01" }, { "key": "end", "value": "2025-03-31" }]
+        }
+      }
+    },
+    {
+      "name": "Screenshot (local file)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "file:///mnt/data/970bb24d-44be-4be4-9681-74b54a63bd6a.png",
+          "protocol": "file",
+          "host": ["", "mnt", "data"],
+          "path": ["970bb24d-44be-4be4-9681-74b54a63bd6a.png"]
         }
       }
     }
