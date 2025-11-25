@@ -1,5 +1,5 @@
 import express from 'express';
-import { body, param } from 'express-validator';
+import { body, param, query } from 'express-validator';
 import {
   createSubscription,
   updateSubscription,
@@ -7,6 +7,7 @@ import {
   getSubscription,
   listSubscriptions,
 } from '../controllers/subscription.controller';
+import { getSpendingSummary } from '../controllers/subscription.summary.controller';
 import { firebaseAuth } from '../middleware/auth.middleware';
 import { validationResultHandler } from './validation';
 
@@ -28,6 +29,26 @@ const updateValidators = [
   body('amount').optional().isNumeric(),
 ];
 
+const summaryValidators = [
+  query("period")
+    .optional()
+    .isIn(["day", "week", "month", "year"]),
+
+  query("date")
+    .optional()
+    .isISO8601(),
+
+  query("start")
+    .optional()
+    .isISO8601(),
+
+  query("end")
+    .optional()
+    .isISO8601()
+];
+
+
+router.get('/summary', firebaseAuth, summaryValidators, validationResultHandler, getSpendingSummary);
 router.post('/', firebaseAuth, createValidators, validationResultHandler, createSubscription);
 router.get('/', firebaseAuth, listSubscriptions);
 router.get('/:id', firebaseAuth, param('id').isMongoId(), validationResultHandler, getSubscription);
